@@ -2,11 +2,12 @@
 
 import { LogOut, Menu, X } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { Brand } from "@/components/layout/brand";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
+import { authClient } from "@/features/auth/auth-client";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -31,8 +32,10 @@ const publicNavigation: NavItem[] = [
 
 const privateNavigation: NavItem[] = [
   { label: "Dashboard", href: "/dashboard" },
+  { label: "Explore", href: "/roadmaps" },
   { label: "My Roadmaps", href: "/my-roadmaps" },
   { label: "My Projects", href: "/my-projects" },
+  { label: "Interview", href: "/interview" },
   { label: "AI Mentor", href: "/mentor" },
   { label: "Profile", href: "/profile" },
 ];
@@ -42,13 +45,33 @@ function routeIsActive(pathname: string, href: string) {
 }
 
 export function SiteHeader({
-  isAuthenticated = false,
-  userName,
+  isAuthenticated: isAuthenticatedOverride,
+  userName: userNameOverride,
   onLogout,
 }: SiteHeaderProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { data: session } = authClient.useSession();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [logoutPending, setLogoutPending] = useState(false);
+  const isAuthenticated = isAuthenticatedOverride ?? Boolean(session?.user);
+  const userName = userNameOverride ?? session?.user.name;
   const navigation = isAuthenticated ? privateNavigation : publicNavigation;
+
+  async function handleLogout() {
+    setLogoutPending(true);
+    try {
+      if (onLogout) {
+        onLogout();
+      } else {
+        await authClient.signOut();
+      }
+      router.push("/login");
+      router.refresh();
+    } finally {
+      setLogoutPending(false);
+    }
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/40 bg-white/70 shadow-sm shadow-slate-900/5 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/70 dark:shadow-black/10">
@@ -86,7 +109,7 @@ export function SiteHeader({
                   {userName}
                 </span>
               ) : null}
-              <Button onClick={onLogout} variant="ghost">
+              <Button disabled={logoutPending} onClick={handleLogout} variant="ghost">
                 <LogOut aria-hidden="true" />
                 Logout
               </Button>
@@ -159,9 +182,10 @@ export function SiteHeader({
               {isAuthenticated ? (
                 <Button
                   className="h-11 rounded-xl"
+                  disabled={logoutPending}
                   onClick={() => {
                     setMenuOpen(false);
-                    onLogout?.();
+                    void handleLogout();
                   }}
                   variant="outline"
                 >

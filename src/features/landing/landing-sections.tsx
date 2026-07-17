@@ -65,7 +65,7 @@ export function HeroSection() {
                   buttonVariants({ size: "lg", variant: "outline" }),
                   "h-12 rounded-xl border-slate-300/80 bg-white/70 px-6 text-base font-bold backdrop-blur-sm dark:border-white/20 dark:bg-slate-950/50",
                 )}
-                href="#career-paths"
+                href="/roadmaps"
               >
                 Explore Roadmaps
               </Link>

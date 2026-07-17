@@ -256,3 +256,74 @@ section[id] {
     animation: none;
   }
 }
+.auth-banner {
+  background-image:
+    linear-gradient(145deg, rgb(30 64 175 / 36%), rgb(8 47 73 / 28%)),
+    url("/images/skillforge/dashboard-ethereal-banner-light.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.dark .auth-banner {
+  background-image:
+    linear-gradient(145deg, rgb(2 6 23 / 48%), rgb(8 47 73 / 36%)),
+    url("/images/skillforge/dashboard-ethereal-banner.png");
+}
+
+.profile-surface {
+  background-image:
+    linear-gradient(rgb(248 250 252 / 88%), rgb(255 255 255 / 96%)),
+    url("/images/skillforge/dashboard-ethereal-banner-light.png");
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: 100% min(44rem, 58vw);
+}
+
+.dark .profile-surface {
+  background-image:
+    linear-gradient(rgb(2 6 23 / 82%), rgb(2 6 23 / 98%)),
+    url("/images/skillforge/dashboard-ethereal-banner.png");
+}
+
+.profile-banner {
+  background-image:
+    linear-gradient(125deg, rgb(15 23 42 / 82%), rgb(30 64 175 / 58%), rgb(8 145 178 / 34%)),
+    url("/images/skillforge/dashboard-ethereal-banner-light.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.dark .profile-banner {
+  background-image:
+    linear-gradient(125deg, rgb(2 6 23 / 86%), rgb(30 64 175 / 48%), rgb(8 145 178 / 26%)),
+    url("/images/skillforge/dashboard-ethereal-banner.png");
+}
+
+.dashboard-surface {
+  background-image:
+    linear-gradient(rgb(248 250 252 / 88%), rgb(255 255 255 / 97%)),
+    url("/images/skillforge/dashboard-ethereal-banner-light.png");
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: 100% min(46rem, 60vw);
+}
+
+.dark .dashboard-surface {
+  background-image:
+    linear-gradient(rgb(2 6 23 / 82%), rgb(2 6 23 / 98%)),
+    url("/images/skillforge/dashboard-ethereal-banner.png");
+}
+
+.dashboard-banner {
+  background-image:
+    linear-gradient(125deg, rgb(15 23 42 / 84%), rgb(30 64 175 / 58%), rgb(8 145 178 / 34%)),
+    url("/images/skillforge/dashboard-ethereal-banner-light.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.dark .dashboard-banner {
+  background-image:
+    linear-gradient(125deg, rgb(2 6 23 / 88%), rgb(30 64 175 / 48%), rgb(8 145 178 / 26%)),
+    url("/images/skillforge/dashboard-ethereal-banner.png");
+}

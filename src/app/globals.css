@@ -126,6 +126,7 @@
 
   html {
     @apply scroll-smooth font-sans;
+    scroll-padding-top: 5rem;
   }
 
   body {
@@ -174,4 +175,84 @@
 
 @utility gradient-text {
   @apply bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400 bg-clip-text text-transparent;
+}
+/* Landing artwork swaps with the class-based theme toggle. */
+.hero-surface {
+  background-image:
+    linear-gradient(135deg, rgb(248 250 252 / 72%), rgb(224 242 254 / 58%)),
+    url("/images/skillforge/hero-ethereal-ai-light.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.dark .hero-surface {
+  background-image:
+    linear-gradient(135deg, rgb(2 6 23 / 78%), rgb(8 47 73 / 60%)),
+    url("/images/skillforge/hero-ethereal-ai.png");
+}
+
+.hero-visual {
+  background-image: url("/images/skillforge/hero-ethereal-ai-light.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.dark .hero-visual {
+  background-image: url("/images/skillforge/hero-ethereal-ai.png");
+}
+
+.features-surface {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 90%), rgb(248 250 252 / 94%)),
+    url("/images/skillforge/features-ethereal-waves-light.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.dark .features-surface {
+  background-image:
+    linear-gradient(rgb(2 6 23 / 88%), rgb(15 23 42 / 94%)),
+    url("/images/skillforge/features-ethereal-waves.png");
+}
+
+.footer-surface {
+  background-image: url("/images/skillforge/footer-ethereal-constellation-light.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.dark .footer-surface {
+  background-image: url("/images/skillforge/footer-ethereal-constellation.png");
+}
+
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+.ambient-float {
+  animation: ambient-float 8s ease-in-out infinite;
+}
+
+.ambient-float-delayed {
+  animation-delay: -4s;
+}
+
+@keyframes ambient-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0) scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .ambient-float {
+    animation: none;
+  }
 }

@@ -6,12 +6,17 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { buttonVariants } from "@/components/ui/button";
+import { authClient } from "@/features/auth/auth-client";
 import { cn } from "@/lib/utils";
 
 const benefits = ["Adaptive weekly plans", "Portfolio-ready projects", "Interview practice"];
 
 export function HeroSection() {
   const reduceMotion = useReducedMotion();
+  const { data: session, isPending: sessionPending } = authClient.useSession();
+  const primaryCta = session?.user
+    ? { href: "/dashboard", label: "Open Dashboard" }
+    : { href: "/register", label: "Get Started" };
   // Keep server-rendered content visible; motion should enhance the page, not gate it.
   const hidden = reduceMotion ? {} : { y: 24 };
 
@@ -33,7 +38,18 @@ export function HeroSection() {
               SkillForge AI creates personalized learning roadmaps, recommends portfolio projects, tracks your progress, and prepares you for technical interviews using intelligent AI guidance.
             </motion.p>
             <motion.div className="mt-8 flex flex-col gap-3 sm:flex-row" variants={{ hidden, show: { opacity: 1, y: 0 } }}>
-              <Link className={cn(buttonVariants({ size: "lg" }), "h-12 rounded-xl bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400 px-6 text-base font-bold text-white shadow-lg shadow-blue-500/25 hover:brightness-105")} href="/register">Get Started <ArrowRight className="size-4" /></Link>
+              <Link
+                aria-disabled={sessionPending}
+                className={cn(
+                  buttonVariants({ size: "lg" }),
+                  "h-12 rounded-xl bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400 px-6 text-base font-bold text-white shadow-lg shadow-blue-500/25 hover:brightness-105",
+                  sessionPending && "pointer-events-none opacity-70",
+                )}
+                href={primaryCta.href}
+                tabIndex={sessionPending ? -1 : undefined}
+              >
+                {primaryCta.label} <ArrowRight className="size-4" />
+              </Link>
               <Link className={cn(buttonVariants({ size: "lg", variant: "outline" }), "h-12 rounded-xl border-slate-300/80 bg-white/70 px-6 text-base font-bold backdrop-blur-sm dark:border-white/20 dark:bg-slate-950/50")} href="/roadmaps">Explore Roadmaps</Link>
             </motion.div>
             <motion.div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-slate-700 dark:text-slate-200" variants={{ hidden, show: { opacity: 1, y: 0 } }}>

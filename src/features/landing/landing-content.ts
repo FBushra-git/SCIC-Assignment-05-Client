@@ -149,33 +149,6 @@ export const journeySteps: IconContent[] = [
   },
 ];
 
-export const testimonials = [
-  {
-    name: "Nadia Rahman",
-    occupation: "Junior Frontend Developer",
-    rating: 5,
-    image: "/images/skillforge/auth-ethereal-learning.png",
-    review:
-      "SkillForge turned a confusing list of tutorials into a roadmap I could actually finish. The project checkpoints made my portfolio feel intentional.",
-  },
-  {
-    name: "Arif Hasan",
-    occupation: "Computer Science Graduate",
-    rating: 5,
-    image: "/images/skillforge/empty-learning-journey.png",
-    review:
-      "The weekly plan helped me balance university work and interview preparation. I always knew what to study next and why it mattered.",
-  },
-  {
-    name: "Samira Ahmed",
-    occupation: "Aspiring Data Analyst",
-    rating: 5,
-    image: "/images/skillforge/dashboard-ethereal-banner-light.png",
-    review:
-      "The recommendations adapted when I struggled with SQL instead of pushing me forward too quickly. That made the learning experience feel genuinely personal.",
-  },
-];
-
 export const frequentlyAskedQuestions = [
   {
     question: "How does SkillForge AI create my roadmap?",

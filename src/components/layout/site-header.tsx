@@ -25,6 +25,7 @@ type NavItem = {
 const publicNavigation: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "Explore Roadmaps", href: "/roadmaps" },
+  { label: "Projects", href: "/items" },
   { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
@@ -35,6 +36,7 @@ const privateNavigation: NavItem[] = [
   { label: "Explore", href: "/roadmaps" },
   { label: "My Roadmaps", href: "/my-roadmaps" },
   { label: "My Projects", href: "/my-projects" },
+  { label: "My Items", href: "/items/manage" },
   { label: "Interview", href: "/interview" },
   { label: "AI Mentor", href: "/mentor" },
   { label: "Profile", href: "/profile" },
@@ -78,7 +80,7 @@ export function SiteHeader({
       <div className="section-shell flex min-h-16 items-center justify-between gap-4 py-2">
         <Brand />
 
-        <nav aria-label="Primary navigation" className="hidden items-center gap-1 lg:flex">
+        <nav aria-label="Primary navigation" className="hidden items-center gap-0.5 xl:flex">
           {navigation.map((item) => {
             const active = routeIsActive(pathname, item.href);
 
@@ -99,7 +101,7 @@ export function SiteHeader({
           })}
         </nav>
 
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden items-center gap-2 xl:flex">
           <ThemeToggle />
 
           {isAuthenticated ? (
@@ -138,7 +140,7 @@ export function SiteHeader({
           )}
         </div>
 
-        <div className="flex items-center gap-2 lg:hidden">
+        <div className="flex items-center gap-2 xl:hidden">
           <ThemeToggle />
           <Button
             aria-controls="mobile-navigation"
@@ -155,7 +157,7 @@ export function SiteHeader({
 
       {menuOpen ? (
         <div
-          className="border-t border-border/70 bg-background/95 px-4 py-4 shadow-lg backdrop-blur-xl lg:hidden"
+          className="border-t border-border/70 bg-background/95 px-4 py-4 shadow-lg backdrop-blur-xl xl:hidden"
           id="mobile-navigation"
         >
           <nav aria-label="Mobile navigation" className="mx-auto grid max-w-7xl gap-1">

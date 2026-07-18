@@ -4,7 +4,6 @@ import {
   FaqSection,
   HeroSection,
   HowItWorksSection,
-  TestimonialsSection,
   WhyChooseSection,
 } from "@/features/landing/landing-sections";
 import { NewsletterSection } from "@/features/landing/newsletter-section";
@@ -18,7 +17,6 @@ export default function Home() {
       <CareerPathsSection />
       <HowItWorksSection />
       <StatisticsSection />
-      <TestimonialsSection />
       <FaqSection />
       <NewsletterSection />
       <SiteFooter />

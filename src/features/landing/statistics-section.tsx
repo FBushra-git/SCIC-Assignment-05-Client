@@ -20,6 +20,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
+import { usePlatformStats } from "@/features/platform/use-platform";
 
 type Stat = {
   label: string;
@@ -27,24 +28,6 @@ type Stat = {
   suffix?: string;
   icon: LucideIcon;
 };
-
-const stats: Stat[] = [
-  { label: "Registered Learners", value: 12480, suffix: "+", icon: UsersRound },
-  { label: "AI Roadmaps Generated", value: 18640, suffix: "+", icon: BrainCircuit },
-  { label: "Projects Completed", value: 7350, suffix: "+", icon: FolderCheck },
-  { label: "Interview Questions", value: 42800, suffix: "+", icon: BookOpenCheck },
-  { label: "Success Rate", value: 94, suffix: "%", icon: BadgeCheck },
-  { label: "Learning Hours", value: 388000, suffix: "+", icon: Clock3 },
-];
-
-const activityData = [
-  { month: "Jan", learners: 5400, roadmaps: 7900 },
-  { month: "Feb", learners: 6800, roadmaps: 9600 },
-  { month: "Mar", learners: 7900, roadmaps: 11800 },
-  { month: "Apr", learners: 9100, roadmaps: 13900 },
-  { month: "May", learners: 10800, roadmaps: 16200 },
-  { month: "Jun", learners: 12480, roadmaps: 18640 },
-];
 
 const chartConfig = {
   learners: { label: "Learners", color: "var(--chart-1)" },
@@ -101,6 +84,24 @@ function ProgressRing({ label, value, color }: { label: string; value: number; c
 }
 
 export function StatisticsSection() {
+  const platformStats = usePlatformStats();
+  const data = platformStats.data;
+  const stats: Stat[] = [
+    { label: "Registered Learners", value: data?.registeredLearners ?? 0, icon: UsersRound },
+    { label: "AI Roadmaps Generated", value: data?.aiRoadmapsGenerated ?? 0, icon: BrainCircuit },
+    { label: "Projects Completed", value: data?.projectsCompleted ?? 0, icon: FolderCheck },
+    { label: "Interview Questions", value: data?.interviewQuestionsGenerated ?? 0, icon: BookOpenCheck },
+    { label: "Roadmap Success Rate", value: data?.successRate ?? 0, suffix: "%", icon: BadgeCheck },
+    { label: "Logged Learning Hours", value: data?.learningHours ?? 0, icon: Clock3 },
+  ];
+  const activityData = data?.activity ?? [];
+  const projectParticipation = data?.registeredLearners
+    ? Math.min(100, Math.round((data.projectsCompleted / data.registeredLearners) * 100))
+    : 0;
+  const learningConsistency = data?.registeredLearners
+    ? Math.min(100, Math.round((data.learningHours / (data.registeredLearners * 10)) * 100))
+    : 0;
+
   return (
     <section className="py-20 sm:py-24 lg:py-32" id="statistics">
       <div className="section-shell">
@@ -119,9 +120,7 @@ export function StatisticsSection() {
                 <span className="grid size-10 place-items-center rounded-xl bg-blue-100 text-blue-700 dark:bg-blue-400/10 dark:text-blue-300">
                   <Icon aria-hidden="true" className="size-5" />
                 </span>
-                <p className="mt-5 font-heading text-2xl font-bold tracking-tight">
-                  <AnimatedNumber suffix={stat.suffix} value={stat.value} />
-                </p>
+                <p className="mt-5 font-heading text-2xl font-bold tracking-tight">{platformStats.isPending ? <span className="inline-block h-7 w-16 animate-pulse rounded bg-muted" /> : <AnimatedNumber suffix={stat.suffix} value={stat.value} />}</p>
                 <p className="mt-2 text-sm leading-5 text-muted-foreground">{stat.label}</p>
               </article>
             );
@@ -133,7 +132,7 @@ export function StatisticsSection() {
             <div>
               <p className="font-heading text-xl font-bold">Platform growth</p>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                Learners and generated roadmaps over the last six months
+                New learner profiles and AI roadmaps created in each of the last six months
               </p>
             </div>
 
@@ -199,12 +198,13 @@ export function StatisticsSection() {
               Signals that show whether learning plans are creating consistent progress.
             </p>
             <div className="mt-7 grid gap-7">
-              <ProgressRing color="var(--chart-3)" label="Roadmap success rate" value={94} />
-              <ProgressRing color="var(--chart-2)" label="Weekly goal completion" value={82} />
-              <ProgressRing color="var(--chart-4)" label="Project milestone rate" value={76} />
+              <ProgressRing color="var(--chart-3)" label="Roadmap completion" value={data?.successRate ?? 0} />
+              <ProgressRing color="var(--chart-2)" label="Learners completing projects" value={projectParticipation} />
+              <ProgressRing color="var(--chart-4)" label="Ten-hour learning baseline" value={learningConsistency} />
             </div>
           </article>
         </div>
+        {platformStats.isError ? <p className="mt-4 rounded-xl border border-destructive/25 bg-destructive/10 p-3 text-sm font-semibold text-destructive">Live platform activity is temporarily unavailable.</p> : null}
       </div>
     </section>
   );

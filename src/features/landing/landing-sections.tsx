@@ -3,13 +3,8 @@ import {
   CheckCircle2,
   ChevronDown,
   Clock3,
-  Quote,
   Sparkles,
-  Star,
-  TrendingUp,
-  UsersRound,
 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 import { SectionHeading } from "@/components/shared/section-heading";
@@ -21,7 +16,6 @@ import {
   frequentlyAskedQuestions,
   journeySteps,
   learningFeatures,
-  testimonials,
 } from "./landing-content";
 
 export function HeroSection() {
@@ -30,8 +24,8 @@ export function HeroSection() {
       <div className="ambient-float absolute -left-28 top-24 size-72 rounded-full bg-blue-500/20 blur-3xl" />
       <div className="ambient-float ambient-float-delayed absolute -right-24 bottom-12 size-80 rounded-full bg-cyan-400/20 blur-3xl" />
 
-      <div className="section-shell relative flex min-h-[calc(100svh-4rem)] items-center py-16 sm:py-20 lg:py-24">
-        <div className="glass-panel grid w-full items-center gap-10 overflow-hidden rounded-[2rem] p-6 sm:p-10 lg:grid-cols-[1.05fr_0.95fr] lg:p-12 xl:gap-16">
+      <div className="section-shell relative flex min-h-[65svh] items-center py-12 sm:py-16 lg:py-20">
+        <div className="glass-panel grid w-full items-center gap-10 overflow-hidden rounded-2xl p-6 sm:p-10 lg:grid-cols-[1.05fr_0.95fr] lg:p-12 xl:gap-16">
           <div className="relative z-10">
             <div className="inline-flex min-h-11 items-center gap-2 rounded-full border border-blue-200/80 bg-blue-50/90 px-4 text-sm font-semibold text-blue-700 shadow-sm dark:border-cyan-300/20 dark:bg-cyan-300/10 dark:text-cyan-200">
               <Sparkles aria-hidden="true" className="size-4" />
@@ -86,7 +80,7 @@ export function HeroSection() {
           <div className="relative mx-auto w-full max-w-xl lg:max-w-none">
             <div
               aria-label="Ethereal AI neural network shaping a personalized learning journey"
-              className="hero-visual relative aspect-[4/5] overflow-hidden rounded-[1.75rem] border border-white/40 shadow-2xl shadow-blue-950/20 sm:aspect-[5/4] lg:aspect-[4/5] dark:border-white/10"
+              className="hero-visual relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/40 shadow-2xl shadow-blue-950/20 sm:aspect-[5/4] lg:aspect-[4/5] dark:border-white/10"
               role="img"
             >
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/5 to-transparent" />
@@ -94,22 +88,20 @@ export function HeroSection() {
               <div className="absolute inset-x-4 bottom-4 grid gap-3 sm:inset-x-6 sm:bottom-6 sm:grid-cols-2">
                 <div className="rounded-2xl border border-white/20 bg-slate-950/65 p-4 text-white shadow-lg backdrop-blur-xl">
                   <div className="flex items-center justify-between gap-3">
-                    <span className="text-sm font-semibold text-slate-200">Roadmap progress</span>
-                    <span className="font-heading text-xl font-bold text-cyan-300">68%</span>
+                    <span className="text-sm font-semibold text-slate-200">Adaptive roadmap</span>
+                    <CheckCircle2 className="size-5 text-cyan-300" />
                   </div>
-                  <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/15">
-                    <div className="h-full w-[68%] rounded-full bg-gradient-to-r from-blue-500 to-cyan-300" />
-                  </div>
+                  <p className="mt-2 text-xs leading-5 text-slate-300">Built around your goal, skills, and weekly schedule.</p>
                 </div>
 
                 <div className="rounded-2xl border border-white/20 bg-slate-950/65 p-4 text-white shadow-lg backdrop-blur-xl">
                   <div className="flex items-center gap-3">
                     <span className="grid size-10 place-items-center rounded-xl bg-emerald-400/20 text-emerald-300">
-                      <TrendingUp aria-hidden="true" className="size-5" />
+                      <Sparkles aria-hidden="true" className="size-5" />
                     </span>
                     <span>
-                      <span className="block text-xs font-medium text-slate-300">This week</span>
-                      <span className="font-heading text-lg font-bold">+4 milestones</span>
+                      <span className="block text-xs font-medium text-slate-300">Next best action</span>
+                      <span className="font-heading text-lg font-bold">Context-aware</span>
                     </span>
                   </div>
                 </div>
@@ -118,11 +110,11 @@ export function HeroSection() {
 
             <div className="ambient-float absolute -right-4 top-6 hidden items-center gap-3 rounded-2xl border border-white/40 bg-white/80 p-3 shadow-xl backdrop-blur-xl sm:flex dark:border-white/10 dark:bg-slate-900/80">
               <span className="grid size-10 place-items-center rounded-xl bg-blue-100 text-blue-700 dark:bg-blue-400/15 dark:text-blue-300">
-                <UsersRound aria-hidden="true" className="size-5" />
+                <CheckCircle2 aria-hidden="true" className="size-5" />
               </span>
               <span>
-                <span className="block text-xs text-muted-foreground">Learning together</span>
-                <span className="font-heading text-sm font-bold">12,480+ learners</span>
+                <span className="block text-xs text-muted-foreground">One connected workspace</span>
+                <span className="font-heading text-sm font-bold">Plan, build, practice</span>
               </span>
             </div>
           </div>
@@ -251,55 +243,6 @@ export function HowItWorksSection() {
             );
           })}
         </ol>
-      </div>
-    </section>
-  );
-}
-
-export function TestimonialsSection() {
-  return (
-    <section className="py-20 sm:py-24 lg:py-32" id="testimonials">
-      <div className="section-shell">
-        <SectionHeading
-          description="Learners use SkillForge to replace scattered study plans with a focused journey they can understand, measure, and complete."
-          eyebrow="Learner stories"
-          title="Progress feels different with a clear plan"
-        />
-
-        <div className="mt-12 grid gap-5 lg:grid-cols-3">
-          {testimonials.map((testimonial) => (
-            <figure className="glass-panel relative flex h-full flex-col rounded-2xl p-6 sm:p-7" key={testimonial.name}>
-              <Quote aria-hidden="true" className="absolute right-6 top-6 size-9 text-blue-200 dark:text-cyan-900" />
-              <div aria-label={`${testimonial.rating} out of 5 stars`} className="flex gap-1">
-                {Array.from({ length: testimonial.rating }).map((_, index) => (
-                  <Star
-                    aria-hidden="true"
-                    className="size-4 fill-amber-400 text-amber-400"
-                    key={index}
-                  />
-                ))}
-              </div>
-              <blockquote className="mt-5 flex-1 text-base leading-8 text-foreground">
-                “{testimonial.review}”
-              </blockquote>
-              <figcaption className="mt-7 flex items-center gap-4 border-t border-border/70 pt-5">
-                <span className="relative size-12 overflow-hidden rounded-full ring-2 ring-blue-200 dark:ring-cyan-800">
-                  <Image
-                    alt={`Portrait illustration of ${testimonial.name}`}
-                    className="object-cover"
-                    fill
-                    sizes="48px"
-                    src={testimonial.image}
-                  />
-                </span>
-                <span>
-                  <span className="block font-heading font-bold">{testimonial.name}</span>
-                  <span className="mt-1 block text-sm text-muted-foreground">{testimonial.occupation}</span>
-                </span>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
       </div>
     </section>
   );

@@ -1,15 +1,11 @@
 import {
   ArrowRight,
-  CheckCircle2,
   ChevronDown,
   Clock3,
-  Sparkles,
 } from "lucide-react";
 import Link from "next/link";
 
 import { SectionHeading } from "@/components/shared/section-heading";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 import {
   careerPaths,
@@ -17,112 +13,6 @@ import {
   journeySteps,
   learningFeatures,
 } from "./landing-content";
-
-export function HeroSection() {
-  return (
-    <section className="hero-surface relative isolate overflow-hidden" id="home">
-      <div className="ambient-float absolute -left-28 top-24 size-72 rounded-full bg-blue-500/20 blur-3xl" />
-      <div className="ambient-float ambient-float-delayed absolute -right-24 bottom-12 size-80 rounded-full bg-cyan-400/20 blur-3xl" />
-
-      <div className="section-shell relative flex min-h-[65svh] items-center py-12 sm:py-16 lg:py-20">
-        <div className="glass-panel grid w-full items-center gap-10 overflow-hidden rounded-2xl p-6 sm:p-10 lg:grid-cols-[1.05fr_0.95fr] lg:p-12 xl:gap-16">
-          <div className="relative z-10">
-            <div className="inline-flex min-h-11 items-center gap-2 rounded-full border border-blue-200/80 bg-blue-50/90 px-4 text-sm font-semibold text-blue-700 shadow-sm dark:border-cyan-300/20 dark:bg-cyan-300/10 dark:text-cyan-200">
-              <Sparkles aria-hidden="true" className="size-4" />
-              Agentic AI for focused career growth
-            </div>
-
-            <h1 className="mt-7 max-w-3xl text-4xl font-bold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-7xl">
-              Learn Smarter with Your Personal{" "}
-              <span className="gradient-text">AI Career Mentor</span>
-            </h1>
-
-            <p className="mt-6 max-w-2xl text-base leading-8 text-slate-700 sm:text-lg dark:text-slate-200">
-              SkillForge AI creates personalized learning roadmaps, recommends portfolio
-              projects, tracks your progress, and prepares you for technical interviews
-              using intelligent AI guidance.
-            </p>
-
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                className={cn(
-                  buttonVariants({ size: "lg" }),
-                  "h-12 rounded-xl bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400 px-6 text-base font-bold text-white shadow-lg shadow-blue-500/25 hover:brightness-105",
-                )}
-                href="/register"
-              >
-                Get Started
-                <ArrowRight aria-hidden="true" className="size-4" />
-              </Link>
-              <Link
-                className={cn(
-                  buttonVariants({ size: "lg", variant: "outline" }),
-                  "h-12 rounded-xl border-slate-300/80 bg-white/70 px-6 text-base font-bold backdrop-blur-sm dark:border-white/20 dark:bg-slate-950/50",
-                )}
-                href="/roadmaps"
-              >
-                Explore Roadmaps
-              </Link>
-            </div>
-
-            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-slate-700 dark:text-slate-200">
-              {["Adaptive weekly plans", "Portfolio-ready projects", "Interview practice"].map(
-                (benefit) => (
-                  <span className="inline-flex items-center gap-2" key={benefit}>
-                    <CheckCircle2 aria-hidden="true" className="size-4 text-emerald-500" />
-                    {benefit}
-                  </span>
-                ),
-              )}
-            </div>
-          </div>
-
-          <div className="relative mx-auto w-full max-w-xl lg:max-w-none">
-            <div
-              aria-label="Ethereal AI neural network shaping a personalized learning journey"
-              className="hero-visual relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/40 shadow-2xl shadow-blue-950/20 sm:aspect-[5/4] lg:aspect-[4/5] dark:border-white/10"
-              role="img"
-            >
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/5 to-transparent" />
-
-              <div className="absolute inset-x-4 bottom-4 grid gap-3 sm:inset-x-6 sm:bottom-6 sm:grid-cols-2">
-                <div className="rounded-2xl border border-white/20 bg-slate-950/65 p-4 text-white shadow-lg backdrop-blur-xl">
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="text-sm font-semibold text-slate-200">Adaptive roadmap</span>
-                    <CheckCircle2 className="size-5 text-cyan-300" />
-                  </div>
-                  <p className="mt-2 text-xs leading-5 text-slate-300">Built around your goal, skills, and weekly schedule.</p>
-                </div>
-
-                <div className="rounded-2xl border border-white/20 bg-slate-950/65 p-4 text-white shadow-lg backdrop-blur-xl">
-                  <div className="flex items-center gap-3">
-                    <span className="grid size-10 place-items-center rounded-xl bg-emerald-400/20 text-emerald-300">
-                      <Sparkles aria-hidden="true" className="size-5" />
-                    </span>
-                    <span>
-                      <span className="block text-xs font-medium text-slate-300">Next best action</span>
-                      <span className="font-heading text-lg font-bold">Context-aware</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="ambient-float absolute -right-4 top-6 hidden items-center gap-3 rounded-2xl border border-white/40 bg-white/80 p-3 shadow-xl backdrop-blur-xl sm:flex dark:border-white/10 dark:bg-slate-900/80">
-              <span className="grid size-10 place-items-center rounded-xl bg-blue-100 text-blue-700 dark:bg-blue-400/15 dark:text-blue-300">
-                <CheckCircle2 aria-hidden="true" className="size-5" />
-              </span>
-              <span>
-                <span className="block text-xs text-muted-foreground">One connected workspace</span>
-                <span className="font-heading text-sm font-bold">Plan, build, practice</span>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 export function WhyChooseSection() {
   return (

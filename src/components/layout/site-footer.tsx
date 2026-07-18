@@ -38,7 +38,7 @@ const socialLinks = [
 export function SiteFooter() {
   return (
     <footer className="footer-surface relative overflow-hidden border-t border-border/60">
-      <div className="absolute inset-0 bg-background/85 dark:bg-slate-950/80" />
+      <div className="absolute inset-0 bg-background/58 dark:bg-slate-950/62" />
       <div className="section-shell relative py-14 sm:py-16">
         <div className="grid gap-10 md:grid-cols-2 xl:grid-cols-[1.35fr_0.65fr_0.65fr_0.8fr_1.2fr]">
           <div>

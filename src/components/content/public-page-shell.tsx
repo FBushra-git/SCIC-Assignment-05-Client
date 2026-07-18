@@ -27,8 +27,8 @@ export function PublicPageShell({
   return (
     <>
       <section className="relative isolate overflow-hidden bg-slate-950 text-white">
-        <div className="absolute inset-0 -z-20 bg-[url('/images/skillforge/features-ethereal-waves-light.png')] bg-cover bg-center opacity-30 dark:bg-[url('/images/skillforge/features-ethereal-waves.png')]" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-slate-950/95 via-blue-950/90 to-cyan-950/70" />
+        <div className="absolute inset-0 -z-20 bg-[url('/images/skillforge/features-ethereal-waves-light.png')] bg-cover bg-center opacity-75 dark:bg-[url('/images/skillforge/features-ethereal-waves.png')]" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-slate-950/72 via-blue-950/58 to-cyan-950/38" />
         <div className="section-shell py-16 sm:py-20 lg:py-24">
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200">{eyebrow}</p>
           <h1 className="mt-4 max-w-4xl text-4xl font-extrabold tracking-tight sm:text-6xl">{title}</h1>

@@ -76,7 +76,14 @@ export function SiteHeader({
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/40 bg-white/70 shadow-sm shadow-slate-900/5 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/70 dark:shadow-black/10">
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full border-b backdrop-blur-xl transition-colors duration-300",
+        pathname === "/"
+          ? "border-white/25 bg-white/[0.22] shadow-none dark:border-white/10 dark:bg-slate-950/[0.24]"
+          : "border-white/40 bg-white/70 shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-slate-950/70 dark:shadow-black/10",
+      )}
+    >
       <div className="section-shell flex min-h-16 items-center justify-between gap-4 py-2">
         <Brand />
 

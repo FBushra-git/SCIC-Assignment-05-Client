@@ -166,7 +166,7 @@
 }
 
 @utility glass-panel {
-  @apply border border-white/40 bg-white/60 shadow-lg backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/60;
+  @apply border border-white/40 bg-white/45 shadow-lg backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/48;
 }
 
 @utility section-shell {
@@ -179,31 +179,22 @@
 /* Landing artwork swaps with the class-based theme toggle. */
 .hero-surface {
   background-image:
-    linear-gradient(135deg, rgb(248 250 252 / 72%), rgb(224 242 254 / 58%)),
+    linear-gradient(135deg, rgb(248 250 252 / 42%), rgb(224 242 254 / 28%)),
     url("/images/skillforge/hero-ethereal-ai-light.png");
-  background-position: center;
+  background-position: top center;
+  background-repeat: no-repeat;
   background-size: cover;
 }
 
 .dark .hero-surface {
   background-image:
-    linear-gradient(135deg, rgb(2 6 23 / 78%), rgb(8 47 73 / 60%)),
+    linear-gradient(135deg, rgb(2 6 23 / 56%), rgb(8 47 73 / 38%)),
     url("/images/skillforge/hero-ethereal-ai.png");
-}
-
-.hero-visual {
-  background-image: url("/images/skillforge/hero-ethereal-ai-light.png");
-  background-position: center;
-  background-size: cover;
-}
-
-.dark .hero-visual {
-  background-image: url("/images/skillforge/hero-ethereal-ai.png");
 }
 
 .features-surface {
   background-image:
-    linear-gradient(rgb(255 255 255 / 90%), rgb(248 250 252 / 94%)),
+    linear-gradient(rgb(255 255 255 / 54%), rgb(248 250 252 / 64%)),
     url("/images/skillforge/features-ethereal-waves-light.png");
   background-position: center;
   background-size: cover;
@@ -211,7 +202,7 @@
 
 .dark .features-surface {
   background-image:
-    linear-gradient(rgb(2 6 23 / 88%), rgb(15 23 42 / 94%)),
+    linear-gradient(rgb(2 6 23 / 62%), rgb(15 23 42 / 70%)),
     url("/images/skillforge/features-ethereal-waves.png");
 }
 
@@ -272,7 +263,7 @@ section[id] {
 
 .profile-surface {
   background-image:
-    linear-gradient(rgb(248 250 252 / 88%), rgb(255 255 255 / 96%)),
+    linear-gradient(rgb(248 250 252 / 60%), rgb(255 255 255 / 82%)),
     url("/images/skillforge/dashboard-ethereal-banner-light.png");
   background-position: top center;
   background-repeat: no-repeat;
@@ -281,13 +272,13 @@ section[id] {
 
 .dark .profile-surface {
   background-image:
-    linear-gradient(rgb(2 6 23 / 82%), rgb(2 6 23 / 98%)),
+    linear-gradient(rgb(2 6 23 / 64%), rgb(2 6 23 / 86%)),
     url("/images/skillforge/dashboard-ethereal-banner.png");
 }
 
 .profile-banner {
   background-image:
-    linear-gradient(125deg, rgb(15 23 42 / 82%), rgb(30 64 175 / 58%), rgb(8 145 178 / 34%)),
+    linear-gradient(125deg, rgb(15 23 42 / 64%), rgb(30 64 175 / 42%), rgb(8 145 178 / 20%)),
     url("/images/skillforge/dashboard-ethereal-banner-light.png");
   background-position: center;
   background-size: cover;
@@ -295,13 +286,13 @@ section[id] {
 
 .dark .profile-banner {
   background-image:
-    linear-gradient(125deg, rgb(2 6 23 / 86%), rgb(30 64 175 / 48%), rgb(8 145 178 / 26%)),
+    linear-gradient(125deg, rgb(2 6 23 / 68%), rgb(30 64 175 / 36%), rgb(8 145 178 / 18%)),
     url("/images/skillforge/dashboard-ethereal-banner.png");
 }
 
 .dashboard-surface {
   background-image:
-    linear-gradient(rgb(248 250 252 / 88%), rgb(255 255 255 / 97%)),
+    linear-gradient(rgb(248 250 252 / 60%), rgb(255 255 255 / 84%)),
     url("/images/skillforge/dashboard-ethereal-banner-light.png");
   background-position: top center;
   background-repeat: no-repeat;
@@ -310,13 +301,13 @@ section[id] {
 
 .dark .dashboard-surface {
   background-image:
-    linear-gradient(rgb(2 6 23 / 82%), rgb(2 6 23 / 98%)),
+    linear-gradient(rgb(2 6 23 / 64%), rgb(2 6 23 / 86%)),
     url("/images/skillforge/dashboard-ethereal-banner.png");
 }
 
 .dashboard-banner {
   background-image:
-    linear-gradient(125deg, rgb(15 23 42 / 84%), rgb(30 64 175 / 58%), rgb(8 145 178 / 34%)),
+    linear-gradient(125deg, rgb(15 23 42 / 64%), rgb(30 64 175 / 42%), rgb(8 145 178 / 20%)),
     url("/images/skillforge/dashboard-ethereal-banner-light.png");
   background-position: center;
   background-size: cover;
@@ -324,6 +315,6 @@ section[id] {
 
 .dark .dashboard-banner {
   background-image:
-    linear-gradient(125deg, rgb(2 6 23 / 88%), rgb(30 64 175 / 48%), rgb(8 145 178 / 26%)),
+    linear-gradient(125deg, rgb(2 6 23 / 68%), rgb(30 64 175 / 36%), rgb(8 145 178 / 18%)),
     url("/images/skillforge/dashboard-ethereal-banner.png");
 }

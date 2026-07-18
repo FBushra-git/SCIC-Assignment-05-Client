@@ -4,7 +4,7 @@ SkillForge AI is an AI-powered career planning and learning workspace for studen
 
 > Backend repository: [SCIC-Assignment-05-Server](https://github.com/FBushra-git/SCIC-Assignment-05-Server)
 
-![SkillForge AI hero artwork](public/images/skillforge/hero-ethereal-ai-light.png)
+![SkillForge AI website homepage](public/images/screenshots/skillforge-homepage.png)
 
 ## Product highlights
 

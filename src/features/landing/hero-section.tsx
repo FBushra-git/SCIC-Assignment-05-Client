@@ -12,7 +12,8 @@ const benefits = ["Adaptive weekly plans", "Portfolio-ready projects", "Intervie
 
 export function HeroSection() {
   const reduceMotion = useReducedMotion();
-  const hidden = reduceMotion ? {} : { opacity: 0, y: 24 };
+  // Keep server-rendered content visible; motion should enhance the page, not gate it.
+  const hidden = reduceMotion ? {} : { y: 24 };
 
   return (
     <section className="hero-surface relative isolate -mt-16 overflow-hidden pt-16" id="home">
@@ -40,7 +41,7 @@ export function HeroSection() {
             </motion.div>
           </motion.div>
 
-          <motion.div animate={{ opacity: 1, scale: 1, x: 0 }} className="relative mx-auto w-full max-w-xl lg:max-w-none" initial={reduceMotion ? false : { opacity: 0, scale: 0.92, x: 44 }} transition={{ duration: reduceMotion ? 0 : 0.85, delay: reduceMotion ? 0 : 0.2 }}>
+          <motion.div animate={{ scale: 1, x: 0 }} className="relative mx-auto w-full max-w-xl lg:max-w-none" initial={reduceMotion ? false : { scale: 0.96, x: 28 }} transition={{ duration: reduceMotion ? 0 : 0.85, delay: reduceMotion ? 0 : 0.2 }}>
             <motion.div animate={reduceMotion ? undefined : { y: [0, -10, 0] }} className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/45 bg-slate-950/20 shadow-2xl shadow-blue-950/25 sm:aspect-[5/4] lg:aspect-[4/5] dark:border-white/10" transition={{ duration: 7, ease: "easeInOut", repeat: Infinity }}>
               <Image alt="Ethereal AI learning companion guiding a personalized career journey" className="object-cover object-center" fill priority sizes="(min-width: 1280px) 38vw, (min-width: 1024px) 44vw, (min-width: 640px) 36rem, 100vw" src="/images/skillforge/auth-ethereal-learning.png" />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/58 via-slate-950/0 to-cyan-200/0" />

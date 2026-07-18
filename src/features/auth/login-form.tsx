@@ -22,6 +22,7 @@ const demoCredentials = {
 export function LoginForm() {
   const router = useRouter();
   const [notice, setNotice] = useState("");
+  const [demoPending, setDemoPending] = useState(false);
   const {
     clearErrors,
     formState: { errors, isSubmitting },
@@ -52,19 +53,56 @@ export function LoginForm() {
         return;
       }
 
-      router.push("/");
+      router.push("/dashboard");
       router.refresh();
     } catch (error) {
       setError("root", { message: getAuthErrorMessage(error) });
     }
   }
 
-  function fillDemoCredentials() {
+  async function loginWithDemoAccount() {
     clearErrors();
     setValue("email", demoCredentials.email, { shouldDirty: true, shouldValidate: true });
     setValue("password", demoCredentials.password, { shouldDirty: true, shouldValidate: true });
-    setNotice("Demo credentials are ready. Select Sign in to continue.");
-    setFocus("email");
+    setNotice("Preparing the demo workspace...");
+    setDemoPending(true);
+
+    try {
+      let signInResult = await authClient.signIn.email({
+        email: demoCredentials.email,
+        password: demoCredentials.password,
+        rememberMe: true,
+      });
+
+      if (signInResult.error) {
+        const signUpResult = await authClient.signUp.email({
+          name: "SkillForge Demo Learner",
+          email: demoCredentials.email,
+          password: demoCredentials.password,
+        });
+
+        // A concurrent visitor may have created the shared demo account first.
+        // Retrying sign-in handles that case without exposing internal auth details.
+        if (signUpResult.error) {
+          signInResult = await authClient.signIn.email({
+            email: demoCredentials.email,
+            password: demoCredentials.password,
+            rememberMe: true,
+          });
+          if (signInResult.error) throw signInResult.error;
+        }
+      }
+
+      setNotice("Demo login complete. Opening the dashboard...");
+      router.push("/dashboard");
+      router.refresh();
+    } catch (error) {
+      setNotice("");
+      setError("root", { message: getAuthErrorMessage(error) });
+      setFocus("email");
+    } finally {
+      setDemoPending(false);
+    }
   }
 
   function showAuthError(message: string) {
@@ -142,7 +180,7 @@ export function LoginForm() {
 
       <Button
         className="h-12 w-full rounded-xl bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400 text-base font-bold text-white shadow-lg shadow-blue-500/20 hover:brightness-105"
-        disabled={isSubmitting}
+        disabled={isSubmitting || demoPending}
         type="submit"
       >
         {isSubmitting ? (
@@ -155,12 +193,13 @@ export function LoginForm() {
 
       <Button
         className="h-12 w-full rounded-xl text-base font-bold"
-        onClick={fillDemoCredentials}
+        disabled={isSubmitting || demoPending}
+        onClick={loginWithDemoAccount}
         type="button"
         variant="secondary"
       >
-        <KeyRound aria-hidden="true" className="size-5" />
-        Fill demo login
+        {demoPending ? <LoaderCircle aria-hidden="true" className="size-5 motion-safe:animate-spin" /> : <KeyRound aria-hidden="true" className="size-5" />}
+        {demoPending ? "Opening demo..." : "Demo login"}
       </Button>
 
       <div className="rounded-2xl border border-border bg-muted/55 p-4 text-sm">

@@ -32,9 +32,9 @@ const difficultyTone = {
 
 function RoadmapCard({ roadmap }: { roadmap: PublicRoadmapSummary }) {
   return (
-    <article className="glass-panel group flex min-h-[31rem] flex-col overflow-hidden rounded-[1.75rem] bg-white/80 transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-500/10 dark:bg-slate-900/70">
+    <article className="glass-panel group flex min-h-[31rem] flex-col overflow-hidden rounded-2xl bg-white/80 transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-500/10 dark:bg-slate-900/70">
       <div className="relative h-48 overflow-hidden">
-        <Image alt="" className="object-cover transition duration-500 group-hover:scale-105" fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" src={roadmap.coverImage} />
+        <Image alt={`${roadmap.careerTitle} roadmap cover`} className="object-cover transition duration-500 group-hover:scale-105" fill sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw" src={roadmap.coverImage} />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/10 to-transparent" />
         <span className={cn("absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-bold backdrop-blur", difficultyTone[roadmap.difficulty])}>{roadmap.difficulty}</span>
         <span className="absolute bottom-4 left-4 rounded-full border border-white/15 bg-slate-950/60 px-3 py-1 text-xs font-bold text-white backdrop-blur">{roadmap.category}</span>
@@ -89,7 +89,7 @@ export function ExploreWorkspace({ initialCareer = "" }: { initialCareer?: strin
 
   return (
     <div className="section-shell py-8 sm:py-12">
-      <header className="relative isolate overflow-hidden rounded-[2rem] border border-white/20 bg-slate-950 px-6 py-12 text-white shadow-2xl shadow-blue-950/20 sm:px-10">
+      <header className="relative isolate overflow-hidden rounded-2xl border border-white/20 bg-slate-950 px-6 py-12 text-white shadow-2xl shadow-blue-950/20 sm:px-10">
         <div className="absolute inset-0 -z-20 bg-[url('/images/skillforge/hero-ethereal-ai.png')] bg-cover bg-center opacity-50" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950 via-blue-950/90 to-cyan-950/70" />
         <span className="inline-flex items-center gap-2 text-sm font-bold text-cyan-200"><Sparkles className="size-4" /> Public AI learning paths</span>
@@ -99,7 +99,7 @@ export function ExploreWorkspace({ initialCareer = "" }: { initialCareer?: strin
         </div>
       </header>
 
-      <section className="glass-panel mt-6 rounded-[1.75rem] bg-white/80 p-4 sm:p-5 dark:bg-slate-900/70" aria-label="Roadmap filters">
+      <section className="glass-panel mt-6 rounded-2xl bg-white/80 p-4 sm:p-5 dark:bg-slate-900/70" aria-label="Roadmap filters">
         <div className="flex flex-col gap-3 lg:flex-row">
           <label className="relative min-w-0 flex-1"><span className="sr-only">Search roadmaps</span><Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" /><input className="h-11 w-full rounded-xl border border-border bg-background/80 pl-10 pr-3 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10" onChange={(event) => updateFilter("search", event.target.value)} placeholder="Search by career, technology, or keyword…" value={filters.search} /></label>
           <select aria-label="Sort roadmaps" className={selectClass} onChange={(event) => updateFilter("sort", event.target.value as ExploreFilters["sort"])} value={filters.sort}>
@@ -120,10 +120,10 @@ export function ExploreWorkspace({ initialCareer = "" }: { initialCareer?: strin
       </section>
 
       <div className="mt-7 flex items-center justify-between gap-3"><p className="text-sm font-semibold text-muted-foreground">{result.data?.pagination.totalItems ?? 0} roadmaps found</p><SlidersHorizontal className="size-4 text-muted-foreground" /></div>
-      {result.isPending ? <div className="mt-5 grid animate-pulse gap-5 md:grid-cols-2 xl:grid-cols-3">{Array.from({ length: 6 }, (_, index) => <div className="h-[31rem] rounded-[1.75rem] bg-muted" key={index} />)}</div> : null}
+      {result.isPending ? <div className="mt-5 grid animate-pulse gap-5 md:grid-cols-2 xl:grid-cols-4">{Array.from({ length: 8 }, (_, index) => <div className="h-[31rem] rounded-2xl bg-muted" key={index} />)}</div> : null}
       {result.isError ? <div className="mt-5 rounded-2xl border border-red-200 bg-red-50 p-5 text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-300">{result.error.message}</div> : null}
-      {result.data?.items.length ? <div className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{result.data.items.map((roadmap) => <RoadmapCard key={roadmap.slug} roadmap={roadmap} />)}</div> : null}
-      {result.data && !result.data.items.length ? <div className="mt-6 rounded-[2rem] border border-dashed border-border p-12 text-center"><Search className="mx-auto size-9 text-muted-foreground" /><h2 className="mt-4 text-xl font-bold">No roadmap matches those filters</h2><p className="mt-2 text-sm text-muted-foreground">Remove one filter or try a broader keyword.</p></div> : null}
+      {result.data?.items.length ? <div className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-4">{result.data.items.map((roadmap) => <RoadmapCard key={roadmap.slug} roadmap={roadmap} />)}</div> : null}
+      {result.data && !result.data.items.length ? <div className="mt-6 rounded-2xl border border-dashed border-border p-12 text-center"><Search className="mx-auto size-9 text-muted-foreground" /><h2 className="mt-4 text-xl font-bold">No roadmap matches those filters</h2><p className="mt-2 text-sm text-muted-foreground">Remove one filter or try a broader keyword.</p></div> : null}
 
       {result.data && result.data.pagination.totalPages > 1 ? <nav aria-label="Roadmap pagination" className="mt-8 flex items-center justify-center gap-3"><Button disabled={!result.data.pagination.hasPreviousPage} onClick={() => setFilters((current) => ({ ...current, page: current.page - 1 }))} variant="outline">Previous</Button><span className="text-sm font-bold">Page {result.data.pagination.page} of {result.data.pagination.totalPages}</span><Button disabled={!result.data.pagination.hasNextPage} onClick={() => setFilters((current) => ({ ...current, page: current.page + 1 }))} variant="outline">Next</Button></nav> : null}
     </div>

@@ -1,12 +1,12 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle2, Mail, Send } from "lucide-react";
-import { useState } from "react";
+import { CheckCircle2, LoaderCircle, Mail, Send } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
+import { useNewsletterSubscription } from "@/features/platform/use-platform";
 
 const newsletterSchema = z.object({
   email: z.string().trim().email("Enter a valid email address, such as name@example.com."),
@@ -15,7 +15,7 @@ const newsletterSchema = z.object({
 type NewsletterForm = z.infer<typeof newsletterSchema>;
 
 export function NewsletterSection() {
-  const [message, setMessage] = useState("");
+  const subscription = useNewsletterSubscription();
   const {
     register,
     handleSubmit,
@@ -23,14 +23,8 @@ export function NewsletterSection() {
     formState: { errors },
   } = useForm<NewsletterForm>({ resolver: zodResolver(newsletterSchema) });
 
-  function subscribe({ email }: NewsletterForm) {
-    // Keep this demo functional until the newsletter API is connected.
-    const storageKey = "skillforge-newsletter-subscribers";
-    const existing = JSON.parse(window.localStorage.getItem(storageKey) ?? "[]") as string[];
-    const subscribers = Array.from(new Set([...existing, email.toLowerCase()]));
-
-    window.localStorage.setItem(storageKey, JSON.stringify(subscribers));
-    setMessage(`You're subscribed. SkillForge updates will be sent to ${email}.`);
+  async function subscribe({ email }: NewsletterForm) {
+    await subscription.mutateAsync(email);
     reset();
   }
 
@@ -78,10 +72,10 @@ export function NewsletterSection() {
               />
               <Button
                 className="h-12 rounded-xl bg-slate-950 px-5 text-base font-bold text-white hover:bg-slate-900"
+                disabled={subscription.isPending}
                 type="submit"
               >
-                Subscribe
-                <Send aria-hidden="true" className="size-4" />
+                {subscription.isPending ? <>Saving <LoaderCircle aria-hidden="true" className="size-4 animate-spin" /></> : <>Subscribe <Send aria-hidden="true" className="size-4" /></>}
               </Button>
             </div>
 
@@ -95,15 +89,16 @@ export function NewsletterSection() {
               </p>
             )}
 
-            {message ? (
+            {subscription.isSuccess ? (
               <p
                 aria-live="polite"
                 className="mt-4 flex items-start gap-2 rounded-xl bg-emerald-950/35 p-3 text-sm font-medium text-emerald-50 ring-1 ring-emerald-200/20"
               >
                 <CheckCircle2 aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
-                {message}
+                You are subscribed. SkillForge updates will be sent to your email.
               </p>
             ) : null}
+            {subscription.isError ? <p className="mt-4 rounded-xl bg-red-950/35 p-3 text-sm font-semibold text-red-100 ring-1 ring-red-200/20" role="alert">{subscription.error.message}</p> : null}
           </form>
         </div>
       </div>

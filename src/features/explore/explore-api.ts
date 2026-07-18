@@ -17,7 +17,7 @@ function queryString(values: Record<string, string | number>) {
 }
 
 export async function fetchPublicRoadmaps(filters: ExploreFilters) {
-  const query = queryString({ ...filters, limit: 6 });
+  const query = queryString({ ...filters, limit: 8 });
   return (await apiRequest<PublicRoadmapResult>(`/public-roadmaps?${query}`)).data;
 }
 

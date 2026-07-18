@@ -1,4 +1,4 @@
-import { ExternalLink, Mail, MapPin, Phone } from "lucide-react";
+import { ExternalLink, LifeBuoy, Mail, MapPin } from "lucide-react";
 import Link from "next/link";
 
 import { Brand } from "@/components/layout/brand";
@@ -17,7 +17,7 @@ const footerGroups = [
     links: [
       { label: "Blog", href: "/blog" },
       { label: "Help Center", href: "/help" },
-      { label: "FAQ", href: "#faq" },
+      { label: "FAQ", href: "/#faq" },
     ],
   },
   {
@@ -30,10 +30,9 @@ const footerGroups = [
 ];
 
 const socialLinks = [
-  { label: "GitHub", href: "https://github.com/FBushra-git" },
-  { label: "LinkedIn", href: "https://www.linkedin.com" },
-  { label: "Twitter", href: "https://x.com" },
-  { label: "Facebook", href: "https://www.facebook.com" },
+  { label: "GitHub profile", href: "https://github.com/FBushra-git" },
+  { label: "Client repository", href: "https://github.com/FBushra-git/SCIC-Assignment-05-Client" },
+  { label: "Server repository", href: "https://github.com/FBushra-git/SCIC-Assignment-05-Server" },
 ];
 
 export function SiteFooter() {
@@ -90,22 +89,16 @@ export function SiteFooter() {
             <h2 className="text-sm font-bold uppercase tracking-[0.16em] text-foreground">Contact</h2>
             <ul className="mt-5 grid gap-4 text-sm text-muted-foreground">
               <li>
-                <a
-                  className="flex items-start gap-3 transition-colors hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:hover:text-cyan-300"
-                  href="mailto:hello@skillforge.ai"
-                >
+                <Link className="flex items-start gap-3 transition-colors hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:hover:text-cyan-300" href="/contact">
                   <Mail aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
-                  hello@skillforge.ai
-                </a>
+                  Contact form
+                </Link>
               </li>
               <li>
-                <a
-                  className="flex items-start gap-3 transition-colors hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:hover:text-cyan-300"
-                  href="tel:+8801700000000"
-                >
-                  <Phone aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
-                  +880 1700-000000
-                </a>
+                <Link className="flex items-start gap-3 transition-colors hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:hover:text-cyan-300" href="/help">
+                  <LifeBuoy aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
+                  Help center
+                </Link>
               </li>
               <li className="flex items-start gap-3 leading-6">
                 <MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0" />

@@ -13,10 +13,8 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { authClient } from "@/features/auth/auth-client";
 import { cn } from "@/lib/utils";
 
@@ -47,16 +45,11 @@ function DetailSection({
 }
 
 export function ProjectDetailsWorkspace({ slug }: { slug: string }) {
-  const router = useRouter();
   const session = authClient.useSession();
-  const project = useProject(slug, Boolean(session.data?.user));
+  const project = useProject(slug, true);
   const saveStatus = useSaveProjectStatus(slug);
 
-  useEffect(() => {
-    if (!session.isPending && !session.data?.user) router.replace("/login");
-  }, [router, session.data?.user, session.isPending]);
-
-  if (session.isPending || project.isPending || !session.data?.user) {
+  if (project.isPending) {
     return <div className="section-shell h-[75svh] animate-pulse py-10"><div className="h-full rounded-[2rem] bg-muted" /></div>;
   }
   if (project.isError || !project.data) {
@@ -66,7 +59,7 @@ export function ProjectDetailsWorkspace({ slug }: { slug: string }) {
 
   return (
     <div className="section-shell py-8 sm:py-12">
-      <Link className="inline-flex items-center gap-2 text-sm font-bold text-blue-700 dark:text-cyan-300" href="/my-projects"><ArrowLeft className="size-4" /> Back to library</Link>
+      <Link className="inline-flex items-center gap-2 text-sm font-bold text-blue-700 dark:text-cyan-300" href="/projects"><ArrowLeft className="size-4" /> Back to library</Link>
       <header className="mt-5 overflow-hidden rounded-[2rem] border border-white/20 bg-slate-950 text-white">
         <div className="grid lg:grid-cols-[1.15fr_.85fr]">
           <div className="relative isolate p-7 sm:p-10">
@@ -92,8 +85,16 @@ export function ProjectDetailsWorkspace({ slug }: { slug: string }) {
         <aside className="glass-panel sticky top-24 rounded-[1.75rem] bg-white/80 p-5 dark:bg-slate-900/70">
           <h2 className="flex items-center gap-2 font-bold"><Rocket className="size-5 text-blue-600 dark:text-cyan-300" /> Project progress</h2>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">Update this project as it moves through your portfolio workflow.</p>
-          <div className="mt-5 grid gap-2">{statusOptions.map((option) => <Button className={cn("h-11 justify-start rounded-xl", data.userStatus === option.value && "ring-2 ring-blue-500/25")} disabled={saveStatus.isPending} key={option.value} onClick={() => saveStatus.mutate({ slug, status: option.value })} variant={data.userStatus === option.value ? "default" : "outline"}>{data.userStatus === option.value ? <CheckCircle2 /> : <ArrowRight />}{option.label}</Button>)}</div>
-          {saveStatus.isError ? <p className="mt-3 text-xs text-destructive">{saveStatus.error.message}</p> : null}
+          {session.isPending ? (
+            <div className="mt-5 h-32 animate-pulse rounded-xl bg-muted" />
+          ) : session.data?.user ? (
+            <>
+              <div className="mt-5 grid gap-2">{statusOptions.map((option) => <Button className={cn("h-11 justify-start rounded-xl", data.userStatus === option.value && "ring-2 ring-blue-500/25")} disabled={saveStatus.isPending} key={option.value} onClick={() => saveStatus.mutate({ slug, status: option.value })} variant={data.userStatus === option.value ? "default" : "outline"}>{data.userStatus === option.value ? <CheckCircle2 /> : <ArrowRight />}{option.label}</Button>)}</div>
+              {saveStatus.isError ? <p className="mt-3 text-xs text-destructive">{saveStatus.error.message}</p> : null}
+            </>
+          ) : (
+            <Link className={cn(buttonVariants({ size: "lg" }), "mt-5 w-full rounded-xl")} href="/login">Sign in to save progress <ArrowRight /></Link>
+          )}
         </aside>
       </div>
 

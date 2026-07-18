@@ -10,8 +10,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useDeferredValue, useEffect, useState } from "react";
+import { useDeferredValue, useState } from "react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { authClient } from "@/features/auth/auth-client";
@@ -26,7 +25,15 @@ const difficultyTone = {
   Advanced: "bg-violet-500/15 text-violet-700 dark:text-violet-300",
 };
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({
+  project,
+  isAuthenticated,
+  sessionPending,
+}: {
+  project: Project;
+  isAuthenticated: boolean;
+  sessionPending: boolean;
+}) {
   const status = useSaveProjectStatus(project.slug);
 
   return (
@@ -44,9 +51,15 @@ function ProjectCard({ project }: { project: Project }) {
         <div className="mt-4 flex items-center gap-2 text-xs font-semibold text-muted-foreground"><Clock3 className="size-4 text-blue-600 dark:text-cyan-300" /> {project.estimatedTime}</div>
         <div className="mt-auto grid grid-cols-[1fr_auto] gap-2 pt-6">
           <Link className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-10 rounded-xl")} href={`/projects/${project.slug}`}>View details <ArrowRight /></Link>
-          <Button aria-label={project.userStatus ? "Project saved" : "Add project"} className="size-10 rounded-xl" disabled={status.isPending || Boolean(project.userStatus)} onClick={() => status.mutate({ slug: project.slug, status: "planned" })} size="icon-lg">
-            {project.userStatus ? <Check /> : <Sparkles />}
-          </Button>
+          {sessionPending ? (
+            <Button aria-label="Checking sign-in status" className="size-10 rounded-xl" disabled size="icon-lg"><Sparkles /></Button>
+          ) : isAuthenticated ? (
+            <Button aria-label={project.userStatus ? "Project saved" : "Add project"} className="size-10 rounded-xl" disabled={status.isPending || Boolean(project.userStatus)} onClick={() => status.mutate({ slug: project.slug, status: "planned" })} size="icon-lg">
+              {project.userStatus ? <Check /> : <Sparkles />}
+            </Button>
+          ) : (
+            <Link aria-label="Sign in to save this project" className={cn(buttonVariants({ size: "icon-lg" }), "size-10 rounded-xl")} href="/login"><Sparkles /></Link>
+          )}
         </div>
       </div>
     </article>
@@ -54,23 +67,14 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export function ProjectsWorkspace() {
-  const router = useRouter();
   const session = authClient.useSession();
   const [search, setSearch] = useState("");
   const deferredSearch = useDeferredValue(search);
   const [difficulty, setDifficulty] = useState("");
   const projects = useProjects(
     { search: deferredSearch, difficulty },
-    Boolean(session.data?.user),
+    true,
   );
-
-  useEffect(() => {
-    if (!session.isPending && !session.data?.user) router.replace("/login");
-  }, [router, session.data?.user, session.isPending]);
-
-  if (session.isPending || !session.data?.user) {
-    return <div className="section-shell h-[70svh] animate-pulse py-10"><div className="h-full rounded-[2rem] bg-muted" /></div>;
-  }
 
   return (
     <div className="section-shell py-8 sm:py-12">
@@ -91,7 +95,7 @@ export function ProjectsWorkspace() {
 
       {projects.isPending ? <div className="mt-7 grid animate-pulse gap-5 md:grid-cols-2 xl:grid-cols-4">{Array.from({ length: 4 }, (_, index) => <div className="h-[31rem] rounded-[1.75rem] bg-muted" key={index} />)}</div> : null}
       {projects.isError ? <div className="mt-7 rounded-2xl border border-red-200 bg-red-50 p-5 text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-300">{projects.error.message}</div> : null}
-      {projects.data?.length ? <div className="mt-7 grid gap-5 md:grid-cols-2 xl:grid-cols-4">{projects.data.map((project) => <ProjectCard key={project.slug} project={project} />)}</div> : null}
+      {projects.data?.length ? <div className="mt-7 grid gap-5 md:grid-cols-2 xl:grid-cols-4">{projects.data.map((project) => <ProjectCard isAuthenticated={Boolean(session.data?.user)} key={project.slug} project={project} sessionPending={session.isPending} />)}</div> : null}
       {projects.data && !projects.data.length ? <div className="mt-8 rounded-[2rem] border border-dashed border-border p-12 text-center"><Search className="mx-auto size-9 text-muted-foreground" /><h2 className="mt-4 text-xl font-bold">No matching projects</h2><p className="mt-2 text-sm text-muted-foreground">Try a different keyword or difficulty.</p></div> : null}
     </div>
   );

@@ -25,7 +25,7 @@ type NavItem = {
 const publicNavigation: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "Explore Roadmaps", href: "/roadmaps" },
-  { label: "Projects", href: "/items" },
+  { label: "Projects", href: "/projects" },
   { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
